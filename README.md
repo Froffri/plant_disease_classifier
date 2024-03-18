@@ -1,5 +1,5 @@
 # CIDL's project
-# Precision in Plant Disease Diagnosis: A CNN Approach to Enhance Agricultural Practices
+## Precision in Plant Disease Diagnosis: A CNN Approach to Enhance Agricultural Practices
 
 Our project is dedicated to addressing this critical need by harnessing the power of Convolutional
 Neural Networks (CNNs). These neural networks are adept at learning intricate patterns and
