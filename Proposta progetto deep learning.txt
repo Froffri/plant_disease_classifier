@@ -1,0 +1,32 @@
+﻿PROJECT PROPOSAL: 
+PLANT DISEASE DETECTION
+
+
+https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset
+
+
+Group Members:
+Ricky Marinsalda
+Francesco Londretti
+
+
+MSc degree: Artificial Intelligence and Data Engineering
+
+
+Brief Description of the problem:
+This project aims to enhance agricultural practices and crop yield by accurately detecting and diagnosing diseases in plants. The CNN learns to extract intricate patterns and features from the images, enabling it to differentiate between healthy and infected plants with expected remarkable precision. This project can be used in day to day life to take care of indoor plants.
+
+Properties of the Dataset:
+The dataset has approximately 87k rgb images of both healthy and diseased states of leaves. These images are categorized into 13 types of plants with a total of 38 distinct classes, each representing the state of every leaf. The overall size of the dataset is circa 3 GiB.
+
+
+Source of Dataset:
+The primary source of the original dataset is available on a GitHub repository: https://github.com/spMohanty/PlantVillage-Dataset/tree/master 
+
+
+Expected task to be performed / Analysis we are proposing:
+* Value if integrating more types of plants as input to expand the variety of the model;
+* Consider, if necessary, some ulterior modifications of the dataset using some augmentation techniques. Divide the dataset into training, validation and test set;
+* Creation of a CNN and analyse which type of layer to use and the right number of layers and the right activation function;
+* Test the created model with the test set using accuracy, precision and recall as the main metrics. Then construct the confusion matrix and analyse the results;
+* Eventually test the final model with some personally collected leaf images.

@@ -1,0 +1,50 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Project Objective}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Practical Applications}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Methodology Overview}{2}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Dataset Description}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Dataset Distribution}{3}{subsection.1.2.1}%
+\contentsline {chapter}{\numberline {2}Related Works}{5}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Methods and Experiments}{6}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Neural Network From Scratch}{6}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Model Architecture}{6}{subsection.3.1.1}%
+\contentsline {subsubsection}{Data Augmentation and Rescaling}{6}{section*.4}%
+\contentsline {paragraph}{Data Augmentation}{6}{section*.5}%
+\contentsline {paragraph}{Rescaling}{7}{section*.7}%
+\contentsline {subsubsection}{Convolutional Layers}{7}{section*.8}%
+\contentsline {subsubsection}{Top Layer}{8}{section*.9}%
+\contentsline {paragraph}{Flatten Layer}{8}{section*.10}%
+\contentsline {paragraph}{Dropout Layer}{8}{section*.11}%
+\contentsline {paragraph}{Dense Layers}{8}{section*.12}%
+\contentsline {subsection}{\numberline {3.1.2}Model Training}{9}{subsection.3.1.2}%
+\contentsline {subsubsection}{Compile Settings}{9}{section*.14}%
+\contentsline {subsubsection}{Callbacks}{9}{section*.15}%
+\contentsline {subsubsection}{Fitting}{9}{section*.16}%
+\contentsline {section}{\numberline {3.2}Feature Extraction}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Defining the CNN Model}{10}{subsection.3.2.1}%
+\contentsline {subsubsection}{Parameter \textit {include\_top}}{11}{section*.19}%
+\contentsline {subsubsection}{Parameter \textit {weights}}{11}{section*.20}%
+\contentsline {subsubsection}{Parameter \textit {input\_shape}}{11}{section*.21}%
+\contentsline {subsubsection}{Parameter \textit {pooling}}{11}{section*.22}%
+\contentsline {subsection}{\numberline {3.2.2}Image Preprocessing and Convolutional Base}{11}{subsection.3.2.2}%
+\contentsline {subsubsection}{Image Preprocessing}{11}{section*.23}%
+\contentsline {subsubsection}{Layers Freezing}{11}{section*.24}%
+\contentsline {subsection}{\numberline {3.2.3}Building and Compiling the Pretrained Model}{12}{subsection.3.2.3}%
+\contentsline {subsubsection}{Model Architecture}{12}{section*.25}%
+\contentsline {paragraph}{resize\_and\_rescale}{12}{section*.26}%
+\contentsline {paragraph}{data\_augmentation}{12}{section*.27}%
+\contentsline {paragraph}{cnn\_base}{12}{section*.28}%
+\contentsline {paragraph}{layers.Flatten()}{12}{section*.29}%
+\contentsline {paragraph}{layers.Dense(256, activation="relu")}{12}{section*.30}%
+\contentsline {paragraph}{layers.BatchNormalization()}{12}{section*.31}%
+\contentsline {paragraph}{layers.Dropout(0.4)}{12}{section*.32}%
+\contentsline {paragraph}{layers.Dense(38, activation="softmax")}{12}{section*.33}%
+\contentsline {section}{\numberline {3.3}Fine-Tuning}{13}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Layers Unfreezing}{13}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Model Compilation}{13}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Fine-Tuning Configuration}{13}{subsection.3.3.3}%
+\contentsline {chapter}{\numberline {4}Results}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}From Scratch Model}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Fine Tuned Model}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Conclusion}{19}{section.4.3}%

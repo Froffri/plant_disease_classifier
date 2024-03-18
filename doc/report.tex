@@ -1,0 +1,114 @@
+% !TeX spellcheck = en_US
+\documentclass[parskip=full]{report}
+
+\usepackage{amsmath}
+\usepackage{listings}
+%\usepackage{beramono}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage[a4paper, margin={3cm}]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{pdfpages}
+
+\usepackage{tikz}
+
+%per la tabella
+\usepackage{tabularx}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{hyphenat}
+\usepackage[english]{babel}
+% Carattere monospaziato di default
+\renewcommand{\ttdefault}{pcr}
+
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
+minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\lstset{
+	% wrap long lines on new line
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	breaklines=true, 
+	columns=fullflexible,
+	% tab and fonts
+	tabsize=2,
+	basicstyle=\ttfamily\small,
+	% theme
+	numbers=left,
+	rulecolor=\color{black!30},	
+	% UTF8 and escape
+	escapeinside={\%TEX}{\^^M},
+	inputencoding=utf8,
+	extendedchars=true,
+	literate={á}{{\'a}}1 {à}{{\`a}}1 {é}{{\'e}}1 {è}{{\`e}}1,
+}
+
+% Stile del codice
+\lstdefinestyle{codeStyle}{
+    % Colore dei commenti
+    commentstyle=\color{teal},
+    % Colore delle keyword
+    keywordstyle=\color{magenta},
+    % Stile dei numeri di riga
+    numberstyle=\tiny\color{gray},
+    % Colore delle stringhe
+    stringstyle=\color{violet},
+    % Dimensione e stile del testo
+    basicstyle=\ttfamily\footnotesize,
+    % newline solo ai whitespaces
+    breakatwhitespace=false,     
+    % newline si/no
+    breaklines=true,                 
+    % Posizione della caption, top/bottom 
+    captionpos=b,                    
+    % Mantiene gli spazi nel codice, utile per l'indentazione
+    keepspaces=true,                 
+    % Dove visualizzare i numeri di linea
+    numbers=left,                    
+    % Distanza tra i numeri di linea
+    numbersep=5pt,                  
+    % Mostra gli spazi bianchi o meno
+    showspaces=false,                
+    % Mostra gli spazi bianchi nelle stringhe
+    showstringspaces=false,
+    % Mostra i tab
+    showtabs=false,
+    % Dimensione dei tab
+    tabsize=2,
+	% Aggiungi la cornice intorno al codice
+    frame=single,
+	morekeywords={Sequential, add, Conv2D, MaxPooling2D, BatchNormalization, Flatten, Dense, Dropout, keras, 
+    data_augmentation, Rescaling}
+} \lstset{style=codeStyle}
+
+
+\begin{document}
+
+\include{chapters/Frontpage}
+
+\tableofcontents
+
+% Rimuovere se non si vuole la tabella delle figure
+% \listoffigures
+
+\include{chapters/Introduction}
+\include{chapters/RelatedWorks}
+\include{chapters/Methods}
+\include{chapters/Results}
+
+\bibliographystyle{plain}
+\bibliography{chapters/Bibliografy.bib}
+
+\end{document}
+% --------------------------------------

@@ -1,0 +1,91 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand{\transparent@use}[1]{}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Methods and Experiments}{6}{chapter.3}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Neural Network From Scratch}{6}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Model Architecture}{6}{subsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Data Augmentation and Rescaling}{6}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Data Augmentation}{6}{section*.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Some of the augmented images\relax }}{7}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:immagine}{{3.1}{7}{Some of the augmented images\relax }{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rescaling}{7}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Convolutional Layers}{7}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Top Layer}{8}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Flatten Layer}{8}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Dropout Layer}{8}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Dense Layers}{8}{section*.12}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces From scratch model\relax }}{8}{table.caption.13}\protected@file@percent }
+\newlabel{tab:model_details}{{3.1}{8}{From scratch model\relax }{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Model Training}{9}{subsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Compile Settings}{9}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Callbacks}{9}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Fitting}{9}{section*.16}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Training and Validation Accuracy/Loss of the model\relax }}{10}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:immagine}{{3.2}{10}{Training and Validation Accuracy/Loss of the model\relax }{figure.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Feature Extraction}{10}{section.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces VGG16 architecture\relax }}{10}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:immagine}{{3.3}{10}{VGG16 architecture\relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Defining the CNN Model}{10}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parameter \textit  {include\_top}}{11}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parameter \textit  {weights}}{11}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parameter \textit  {input\_shape}}{11}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Parameter \textit  {pooling}}{11}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Image Preprocessing and Convolutional Base}{11}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Image Preprocessing}{11}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Layers Freezing}{11}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Building and Compiling the Pretrained Model}{12}{subsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Model Architecture}{12}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{resize\_and\_rescale}{12}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{data\_augmentation}{12}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{cnn\_base}{12}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{layers.Flatten()}{12}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{layers.Dense(256, activation="relu")}{12}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{layers.BatchNormalization()}{12}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{layers.Dropout(0.4)}{12}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{layers.Dense(38, activation="softmax")}{12}{section*.33}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Feature Extraction model\relax }}{12}{table.caption.34}\protected@file@percent }
+\newlabel{tab:model_details}{{3.2}{12}{Feature Extraction model\relax }{table.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Training and Validation Accuracy/Loss of the model\relax }}{13}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:immagine}{{3.4}{13}{Training and Validation Accuracy/Loss of the model\relax }{figure.caption.35}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Fine-Tuning}{13}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Layers Unfreezing}{13}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Model Compilation}{13}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Fine-Tuning Configuration}{13}{subsection.3.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Training and Validation Accuracy/Loss of the model\relax }}{14}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:immagine}{{3.5}{14}{Training and Validation Accuracy/Loss of the model\relax }{figure.caption.36}{}}
+\@setckpt{chapters/Methods}{
+\setcounter{page}{15}
+\setcounter{equation}{0}
+\setcounter{enumi}{0}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{3}
+\setcounter{section}{3}
+\setcounter{subsection}{3}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{5}
+\setcounter{table}{2}
+\setcounter{parentequation}{0}
+\setcounter{lstnumber}{18}
+\setcounter{float@type}{8}
+\setcounter{Item}{0}
+\setcounter{Hfootnote}{0}
+\setcounter{bookmark@seq@number}{19}
+\setcounter{svg@param@lastpage}{0}
+\setcounter{svg@param@currpage}{-1}
+\setcounter{caption@flags}{0}
+\setcounter{continuedfloat}{0}
+\setcounter{subfigure}{0}
+\setcounter{subtable}{0}
+\setcounter{AM@survey}{0}
+\setcounter{lstlisting}{0}
+\setcounter{section@level}{2}
+}

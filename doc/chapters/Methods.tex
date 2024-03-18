@@ -1,0 +1,430 @@
+\chapter{Methods and Experiments}
+
+In this chapter, we discuss the implementation of a Convolutional Neural Network (CNN) model using TensorFlow 
+and Keras for the purpose of image classification. The model has been trained over 20 epochs. This chapter provides 
+a detailed breakdown of the code used for building and training the CNN.
+
+\section{Neural Network From Scratch}
+
+\subsection{Model Architecture}
+
+The model architecture is structured as follows:
+
+\subsubsection{Data Augmentation and Rescaling}
+These are the layers used to apply changes to the images.
+
+\paragraph{Data Augmentation}
+A data augmentation layer is added to enhance the training dataset by applying random transformations to the input images.
+
+\begin{lstlisting}[language=Python]
+	data_augmentation = keras.Sequential([
+	layers.RandomFlip("horizontal"), # Applies horizontal flipping to a random 50% of the images
+	layers.RandomRotation(0.1), # Rotates the input images by a random value in the range[-10\%, +10\%] (fraction of full circle [-36, 36])
+	layers.RandomZoom(0.1), # Zooms in or out of the image by a random factor in the range [-20%, +20%]
+	layers.RandomContrast(0.1),
+	],
+	name = "AugmentationLayer"
+	)
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width= 0.8\textwidth]{assets/augmentation.png} 
+    \caption{Some of the augmented images} 
+    \label{fig:immagine}
+\end{figure}
+
+\paragraph{Rescaling}
+
+A rescaling layer is incorporated to normalize the pixel values to the range [0, 1].
+
+\begin{lstlisting}[language=Python]
+	model.add(layers.Rescaling(1./255))
+\end{lstlisting}
+
+\subsubsection{Convolutional Layers}
+Multiple convolutional layers with varying numbers of filters, kernel sizes, and activation functions (ReLU) are 
+introduced to extract features from the input images. Max-pooling and batch normalization layers are applied 
+subsequently to downsample and normalize the feature maps.
+
+\begin{lstlisting}[language=Python]
+	model.add(layers.Conv2D(32, kernel_size = 3, activation = "relu6", padding = "same", input_shape = (256, 256,3)))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+
+	model.add(layers.Conv2D(64, kernel_size = 3, activation='relu', padding = "same"))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+
+	model.add(layers.Conv2D(128, kernel_size = 3, activation='relu', padding = "same"))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+
+	model.add(layers.Conv2D(256, kernel_size = 3, activation='relu', padding = "same"))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+
+	model.add(layers.Conv2D(512, kernel_size = 3, activation='relu', padding = "same"))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+
+	model.add(layers.Conv2D(512, kernel_size = 3, activation='relu', padding = "same"))
+	model.add(layers.MaxPooling2D((2, 2)))
+	model.add(layers.BatchNormalization())
+\end{lstlisting}
+
+Of course, this represents the final and most optimized model in our architecture. The model's composition began with 
+just three building blocks, each consisting of a \textit{Conv2D} layer, a \textit{MaxPooling2D} layer, and a 
+\textit{BatchNormalization} layer. In its initial form, the model included three chunks, each comprising 32, 64, and 128 
+feature maps, respectively. As our experimentation progressed, we systematically added more chunks to the architecture 
+to enhance the training accuracy.
+
+\subsubsection{Top Layer}
+It is responsible for adapting the network's output to the specific problem.
+
+\paragraph{Flatten Layer}
+A flatten layer is employed to convert the output from the convolutional layers into a 1D vector.
+
+\begin{lstlisting}[language=Python]
+	model.add(layers.Flatten())
+\end{lstlisting}
+
+\paragraph{Dropout Layer}
+Dropout with a rate of 0.5 is used to regularize the model by randomly deactivating a portion of input units. It's 
+used against overfitting.
+
+\begin{lstlisting}[language=Python]
+	model.add(layers.Dropout(0.5))
+\end{lstlisting}
+
+\paragraph{Dense Layers}
+One fully connected (dense) layer with \textit{ReLU} activation function is added to facilitate the classification. The last 
+layer is formed by the same number of neuron as the number of classes and it has the \textit{Softmax} activation function.
+
+\begin{lstlisting}[language=Python]
+	model.add(layers.Dense(256,activation="relu"))
+	model.add(layers.Dense(38,activation="softmax"))
+\end{lstlisting}
+
+This is the resulting model:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ccc}
+	\hline
+	\textbf{Layer}                & \textbf{Output Shape}      & \textbf{Param \#}    \\ 
+	AugmentationLayer             & (None, 256, 256, 3)       & 0                    \\ 
+	rescaling\_3                  & (None, 256, 256, 3)       & 0                    \\ 
+	conv2d\_6                     & (None, 256, 256, 32)      & 896                  \\ 
+	max\_pooling2d\_6             & (None, 128, 128, 32)      & 0                    \\ 
+	batch\_normalization\_9       & (None, 128, 128, 32)      & 128                  \\ 
+	conv2d\_7                     & (None, 128, 128, 64)      & 18496                \\ 
+	max\_pooling2d\_7             & (None, 64, 64, 64)        & 0                    \\ 
+	batch\_normalization\_10      & (None, 64, 64, 64)        & 256                  \\ 
+	conv2d\_8                     & (None, 64, 64, 128)       & 73856                \\ 
+	max\_pooling2d\_8             & (None, 32, 32, 128)       & 0                    \\ 
+	batch\_normalization\_11      & (None, 32, 32, 128)       & 512                  \\ 
+	conv2d\_9                     & (None, 32, 32, 256)       & 295168               \\ 
+	max\_pooling2d\_9             & (None, 16, 16, 256)       & 0                    \\ 
+	batch\_normalization\_12      & (None, 16, 16, 256)       & 1024                 \\ 
+	conv2d\_10                    & (None, 16, 16, 512)       & 1180160              \\ 
+	max\_pooling2d\_10            & (None, 8, 8, 512)         & 0                    \\ 
+	batch\_normalization\_13      & (None, 8, 8, 512)         & 2048                 \\ 
+	conv2d\_11                    & (None, 8, 8, 512)         & 2359808              \\ 
+	max\_pooling2d\_11            & (None, 4, 4, 512)         & 0                    \\ 
+	batch\_normalization\_14      & (None, 4, 4, 512)         & 2048                 \\ 
+	flatten\_4                    & (None, 8192)              & 0                    \\ 
+	dropout\_4                    & (None, 8192)              & 0                    \\ 
+	dense\_8                      & (None, 256)               & 2097408              \\ 
+	dense\_9                      & (None, 38)                & 9766                 \\ 
+	\hline
+	\end{tabular}
+	\caption{From scratch model}
+	\label{tab:model_details}
+\end{table}
+
+\subsection{Model Training}
+
+The model is trained through the following steps:
+
+\subsubsection{Compile Settings}
+In this section we explain the settings chosen for the compilation of the model:
+\begin{itemize}
+	\item \textbf{loss}: we used \textit{categorical\_crossentropy} because it quantifies the dissimilarity 
+		between predicted class probabilities and actual class labels. The formula for the categorical crossentropy
+		is as follows: $-\sum_i{y_i \cdot log(p_i)}$ where $y_i$is the true probability distribution for class i and 
+		$p_i$ is the predicted probability for class i as output by the model.
+	\item \textbf{optimizer}: the algorithm used to update the model's weights during training is \textit{Adam}. We chose 
+		this optimizer instead of \textit{rmsprop} because of his popularity and adaptive learning rates.
+	\item \textbf{metrics}: we chose to use \textit{accuracy} as our metric due to the balanced dataset, its interpretability, 
+		and the absence of a need to favor either FP or FN.
+\end{itemize}
+
+\begin{lstlisting}[language=Python]
+	model.compile(
+		loss="categorical_crossentropy",
+		optimizer="adam",
+		metrics=["accuracy"]
+	)
+\end{lstlisting}
+
+\subsubsection{Callbacks}
+
+The defined callbacks are \textbf{early stopping} and \textbf{model checkpoint}, to monitor the training process.
+
+\begin{lstlisting}[language=Python]
+	save_best_model = tf.keras.callbacks.ModelCheckpoint(modelPath, verbose=True, monitor='val_loss', save_best_only=True, save_weights_only=True)
+
+	earlyStopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
+\end{lstlisting}
+
+\textit{ModelCheckpoint} callback is saving the best model weights based on validation loss, while the 
+\textit{EarlyStopping} callback is stopping the training early if the validation loss doesn't improve over a 
+specified number of epochs (in this case, 5 consecutive epochs). 
+
+\subsubsection{Fitting}
+The model is trained using the \texttt{model.fit()} method with the training and validation datasets. 
+Training spans 20 epochs.
+
+\begin{lstlisting}[language=Python]
+	history = model.fit(
+    train_dataset,
+    epochs=20,
+    validation_data=valid_dataset,
+    validation_steps=len(valid_dataset),
+    callbacks=[earlyStopping, save_best_model]
+  )
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width= 0.8\textwidth]{assets/scratch/32relu6_64_128_256_512_512_Drp_256d.png} 
+    \caption{Training and Validation Accuracy/Loss of the model} 
+    \label{fig:immagine}
+\end{figure}
+
+\section{Feature Extraction}
+
+In our study, we explored various pretrained Convolutional Neural Network (CNN) models, such as EfficientNetV2L, 
+EfficientNetB5, and EfficientNetB7. However, these complex models demanded substantial computational resources 
+and time for training, ultimately falling short of our performance expectations.
+
+Recognizing these challenges, we redirected our efforts toward a simpler CNN architecture, VGG16. This decision 
+yielded significantly improved accuracy, highlighting that, in specific scenarios, simplicity can outperform 
+complexity. By adopting VGG16, we streamlined our experimentation, optimized resource allocation, and ultimately 
+achieved more satisfactory outcomes for our research objectives.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width= 0.8\textwidth]{assets/VGG16.png} 
+    \caption{VGG16 architecture} 
+    \label{fig:immagine}
+\end{figure}
+
+\subsection{Defining the CNN Model}
+
+Below is the code to define the CNN model based on VGG16:
+
+\begin{lstlisting}[language=Python]
+	# Define a CNN model based on pre-trained VGG16
+	cnn_base = tf.keras.applications.VGG16(
+	include_top=False,           # Do not include the fully connected layer on top of the model
+	weights="imagenet",          # Use pre-trained weights from ImageNet
+	input_shape=(IMAGE_HEIGHT, IMAGE_WIDTH, 3),  # Specify input shape (height, width, channels)
+	pooling='max',               # Use max-pooling as the pooling operation
+	)
+\end{lstlisting}
+
+In this implementation, we have used several key parameters to configure the VGG16 model according to our needs.
+
+\subsubsection{Parameter \textit{include\_top}}
+The \textit{include\_top} parameter is set to `False`, which means we will not include the fully connected layer at the 
+top of the VGG16 model. This is useful when we intend to add our own layers on top to adapt the model for our specific tasks.
+
+\subsubsection{Parameter \textit{weights}}
+The \textit{weights} parameter is set to "imagenet," indicating that we are using pre-trained weights of the VGG16
+model trained on ImageNet. This choice allows us to benefit from the knowledge learned by the network on a large dataset.
+
+\subsubsection{Parameter \textit{input\_shape}}
+We defined the input\_shape parameter to specify the expected dimensions of the input that the model accepts. 
+Both IMAGE\_HEIGHT and IMAGE\_WIDTH are set to 256. The value 3 signifies the number of channels for RGB images.
+
+\subsubsection{Parameter \textit{pooling}}
+The \textit{pooling} parameter is set to "max", indicating the use of max-pooling as the pooling operation after the 
+convolutional layers. Max-pooling is used to reduce the size of feature maps.
+
+
+\subsection{Image Preprocessing and Convolutional Base}
+
+In this section, we'll discuss image preprocessing and the configuration of the convolutional base.
+
+\subsubsection{Image Preprocessing}
+
+We create a sequential model for resizing and rescaling images:
+
+\begin{lstlisting}[language=Python]
+	resize_and_rescale = tf.keras.Sequential([
+	layers.Resizing(IMAGE_HEIGHT, IMAGE_WIDTH), # Resize input images
+	layers.Rescaling(1./255)  # Rescale pixel values to [0, 1]
+	])
+\end{lstlisting}
+
+This sequential model consists of two layers. The first layer, \textbf{layers.Resizing}, resizes input images to the 
+specified dimensions of \texttt{IMAGE\_HEIGHT} and \texttt{IMAGE\_WIDTH}. The second layer, \textbf{layers.Rescaling}, 
+scales the pixel values of the images to the range [0, 1].
+
+\subsubsection{Layers Freezing}
+
+We set the convolutional base (\texttt{cnn\_base}) to be non-trainable:
+
+	\begin{lstlisting}[language=Python]
+		cnn_base.trainable = False
+	\end{lstlisting}
+
+This line ensures that the convolutional layers within the \texttt{cnn\_base} model will not receive updates 
+during training. Only the additional layers added on top of it will be trained.
+
+\subsection{Building and Compiling the Pretrained Model}
+
+In this section, we'll discuss the construction and compilation of the pretrained model.
+
+\subsubsection{Model Architecture}
+
+We construct a sequential model by stacking various layers:
+
+\begin{lstlisting}[language=Python]
+	pretrained_model = tf.keras.Sequential([
+	resize_and_rescale,  # Image preprocessing and rescaling
+	data_augmentation,   # Data augmentation for training
+	cnn_base,            # Pretrained convolutional base
+	layers.Flatten(),    # Flatten feature maps
+	layers.Dense(256, activation="relu"),  # Fully connected layer with ReLU activation
+	layers.BatchNormalization(),           # Batch normalization layer
+	layers.Dropout(0.4),                   # Dropout layer with 40% dropout rate
+	layers.Dense(38, activation="softmax") # Output layer with softmax activation
+	])
+\end{lstlisting}
+
+\paragraph{resize\_and\_rescale} This is the image preprocessing and rescaling step that we discussed earlier.
+
+\paragraph{data\_augmentation} Data augmentation is used for training, and it helps generate variations of the 
+	training data to improve model generalization.
+
+\paragraph{cnn\_base} The pretrained convolutional base, which was frozen earlier, serves as the feature extractor.
+
+\paragraph{layers.Flatten()} This layer is used to flatten the feature maps from the convolutional base.
+
+\paragraph{layers.Dense(256, activation="relu")} A fully connected layer with 256 units and ReLU activation.
+
+\paragraph{layers.BatchNormalization()} A batch normalization layer to normalize activations.
+
+\paragraph{layers.Dropout(0.4)} A dropout layer with a dropout rate of 40\% to prevent overfitting.
+
+\paragraph{layers.Dense(38, activation="softmax")} The output layer with softmax activation for multi-class classification. 
+	The number of units (38) should match the number of classes.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ccc}
+	\hline
+	\textbf{Layer (type)}          & \textbf{Output Shape} & \textbf{Param \#}     \\ 
+	sequential\_4 (Sequential)     & (None, 256, 256, 3)  & 0                     \\ 
+	AugmentationLayer (Sequential) & (None, 256, 256, 3)  & 0                     \\ 
+	vgg16 (Functional)             & (None, 512)          & 14714688              \\ 
+	flatten\_3 (Flatten)           & (None, 512)          & 0                     \\ 
+	dense\_6 (Dense)               & (None, 256)          & 131328                \\ 
+	batch\_normalization\_8        & (None, 256)          & 1024                  \\ 
+	dropout\_3 (Dropout)           & (None, 256)          & 0                     \\ 
+	dense\_7 (Dense)               & (None, 38)           & 9766                  \\ 
+	\hline
+	\end{tabular}
+	\caption{Feature Extraction model}
+	\label{tab:model_details}
+\end{table}
+	
+
+We then proceeded following the same steps as the Neural Network from scratch.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width= 0.8\textwidth]{assets/FExtraction/FE_base_256d.png} 
+    \caption{Training and Validation Accuracy/Loss of the model} 
+    \label{fig:immagine}
+\end{figure}
+
+\section{Fine-Tuning}
+
+In this section, we will explore the fine-tuning technique for building a Convolutional Neural Network. 
+It's worth noting that some of the steps involved in constructing a fine-tuned CNN overlap with the steps used for 
+feature extraction in the previously trained model. We will continue with the following steps:
+
+\subsection{Layers Unfreezing}
+
+Next, we unfreeze the last block of VGG16's convolutional layers:
+
+\begin{lstlisting}[language=Python]
+	# Allow training of the entire `cnn_base`
+	cnn_base.trainable = True
+	
+	# Initialize a flag `set_trainable` to False
+	set_trainable = False
+	
+	# Loop through the layers of the `cnn_base`
+	for layer in cnn_base.layers:
+		# Check if the layer name is 'block5_conv1'
+		if layer.name == 'block5_conv1':
+			set_trainable = True
+		
+		# If `set_trainable` is True, make the layer trainable; otherwise, freeze it
+		if set_trainable:
+			layer.trainable = True
+		else:
+			layer.trainable = False
+
+\end{lstlisting}
+
+\subsection{Model Compilation}
+
+As for the other models we compile it with an important difference:
+
+\begin{lstlisting}[language=Python]
+	pretrained_model.compile(
+	loss='categorical_crossentropy',  # Categorical cross-entropy loss
+	optimizer=tf.keras.optimizers.Adam(learning_rate=0.00001),  # Adam optimizer with a custom learning rate
+	metrics=["accuracy"]  # Accuracy metric for evaluation
+	)
+\end{lstlisting}
+
+The learning rate is equal to 0.00001, this is used to retain valuable features learned during initial training, 
+prevent overfitting, ensure stability, and enable fine-grained adjustments.
+
+\subsection{Fine-Tuning Configuration}
+
+We proceed with fine-tuning and configure callbacks for the process:
+
+\begin{lstlisting}[language=Python]
+	# Define the model name for fine-tuning
+	modelName = "FT_base_256d"
+	
+	# Construct the model path for saving
+	modelPath = os.path.join(fineTunedPath, modelName + ".keras")
+	
+	# Configure ModelCheckpoint callback
+	save_best_model = tf.keras.callbacks.ModelCheckpoint(
+	modelPath,
+	monitor='val_loss', verbose=1,
+	save_best_only=True, save_weights_only=True
+	)
+	
+	# Configure EarlyStopping callback
+	earlyStopping = tf.keras.callbacks.EarlyStopping(
+	monitor='val_loss', patience=5
+	)
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width= 0.8\textwidth]{assets/fine-tuning/FT_base_256d.png} 
+    \caption{Training and Validation Accuracy/Loss of the model} 
+    \label{fig:immagine}
+\end{figure}
